@@ -11,11 +11,10 @@ class Demo
   def initialize
   end
 
-  def call
+  def call(query)
     json_data = File.read('clients.json')
     client_list = ClientList.from_json(json_data)
 
-    query = "Isabella"
     matching_clients = client_list.find_matches(query: query, field: :full_name)
 
     puts "Clients matching '#{query}'"
