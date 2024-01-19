@@ -9,10 +9,10 @@ class ClientList
     ClientList.new(clients: clients)
   end
 
-  def find_matches(query:, field: :full_name)
+  def find_matches(regex_query:, field: :full_name)
     @clients.select do |client|
       client.public_send(field)
-            .match(query)
+            .match(regex_query)
     end
   end
 
