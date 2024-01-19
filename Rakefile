@@ -1,9 +1,16 @@
-require './demo.rb'
+require './lib/services/find_matches.rb'
+require './lib/services/find_duplicates.rb'
 
-task :demo do
-  query = arguments.first
+namespace :clients do
+  task :find_matches do
+    query = arguments.first
 
-  Demo.new.call(query)
+    FindMatches.new.call(query)
+  end
+
+  task :find_duplicates do
+    FindDuplicates.new.call
+  end
 end
 
 # This is a common;y-used trick to support command-line arguments in Rake.
