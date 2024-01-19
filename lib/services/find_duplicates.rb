@@ -4,8 +4,8 @@
 
 require 'json'
 require 'irb'
-require './client.rb'
-require './client_list.rb'
+require './lib/client.rb'
+require './lib/client_list.rb'
 
 class FindDuplicates
   def initialize
