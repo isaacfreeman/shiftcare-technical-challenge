@@ -1,5 +1,9 @@
+require 'json'
+
 class Client
   attr_reader :id, :full_name, :email
+
+  class MissingDataError < StandardError; end
 
   def initialize(id:, full_name:, email:)
     @id = id
@@ -7,12 +11,14 @@ class Client
     @email = email
   end
 
-  # Initialize from JSON data
-  def self.from_json(client_json)
+  # Initialize from a hash of arguments
+  def self.from_hash(client_data)
+    raise MissingDataError if [client_data["id"], client_data["full_name"], client_data["email"]].any?(&:nil?)
+
     new(
-      id: client_json["id"],
-      full_name: client_json["full_name"],
-      email: client_json["email"]
+      id: client_data["id"],
+      full_name: client_data["full_name"],
+      email: client_data["email"]
     )
   end
 
