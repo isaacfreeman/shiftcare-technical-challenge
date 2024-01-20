@@ -4,15 +4,17 @@ require './lib/services/find_duplicates.rb'
 namespace :clients do
   task :find_matches do
     query = arguments[0]
-    data_path = arguments[1]
+    data_path = arguments[2]
+    field = arguments[1]
 
-    FindMatches.new.call(query: query, data_path: data_path)
+    FindMatches.new.call(query: query, field: field, data_path: data_path)
   end
 
   task :find_duplicates do
-    data_path = arguments[0]
+    field = arguments[0]
+    data_path = arguments[1]
 
-    FindDuplicates.new.call(data_path: data_path)
+    FindDuplicates.new.call(field: field, data_path: data_path)
   end
 end
 

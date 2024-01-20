@@ -1,6 +1,8 @@
 require 'json'
 
 class Client
+  ALLOWED_QUERY_FIELDS = [:full_name, :email]
+
   attr_reader :id, :full_name, :email
 
   class MissingDataError < StandardError; end

@@ -83,6 +83,31 @@ describe ClientList do
         expect(subject).to eq({})
       end
     end
+
+    context "when given an additional field argument" do
+      subject { client_list.find_duplicates(field: field) }
+
+      let(:field) { :full_name }
+
+      let(:client1) { Client.new(id: 1, full_name: "John Doe", email: "john.doe@example.com")}
+      let(:client2) { Client.new(id: 2, full_name: "John Doe", email: "john.doe.alternate.email@example.com")}
+
+      it "returns duplicates from the specified field" do
+        expect(subject).to eq(
+          {
+            "John Doe" => [client1, client2]
+          }
+        )
+      end
+
+      context "when the field is not on the permitted list" do
+        let(:field) { :super_secret_data }
+
+        it "raises an error" do
+          expect { subject }.to raise_error(ClientList::UnknownFieldError)
+        end
+      end
+    end
   end
 
   describe '#find_matches' do
@@ -111,6 +136,14 @@ describe ClientList do
 
       it "can match against the given field" do
         expect(subject).to match_array([client2])
+      end
+
+      context "when the field is not on the permitted list" do
+        let(:field) { :super_secret_data }
+
+        it "raises an error" do
+          expect { subject }.to raise_error(ClientList::UnknownFieldError)
+        end
       end
     end
   end

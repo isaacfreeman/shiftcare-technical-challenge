@@ -10,13 +10,15 @@ class FindDuplicates
   def initialize
   end
 
-  def call(data_path: nil)
+  def call(field: nil, data_path: nil)
     data_path ||= 'clients.json'
+    field ||= :email
+
     json_data = File.read(data_path)
     client_list = ClientList.from_json(json_data)
 
-    puts "Clients with duplicate emails"
-    duplicate_emails = client_list.find_duplicates
+    puts "Clients with duplicate #{field}"
+    duplicate_emails = client_list.find_duplicates(field: field.to_sym)
 
     duplicate_emails.each do |email, duplicate_clients|
       puts "#{email} appears #{duplicate_clients.count} times:"

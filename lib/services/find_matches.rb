@@ -10,12 +10,14 @@ class FindMatches
   def initialize
   end
 
-  def call(query:, data_path: nil)
+  def call(query:, field: nil, data_path: nil)
     data_path ||= 'clients.json'
+    field ||= :full_name
+
     json_data = File.read(data_path)
     client_list = ClientList.from_json(json_data)
 
-    matching_clients = client_list.find_matches(regex_query: query, field: :full_name)
+    matching_clients = client_list.find_matches(regex_query: query, field: field.to_sym)
 
     puts "Clients matching '#{query}'"
     matching_clients.each do |matching_client|
