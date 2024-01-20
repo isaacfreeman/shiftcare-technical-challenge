@@ -2,14 +2,16 @@ require './lib/services/find_matches.rb'
 require './lib/services/find_duplicates.rb'
 
 namespace :clients do
+  desc "Find clients that match a given query. Optionally specify the field to match and path to the source JSON data."
   task :find_matches do
     query = arguments[0]
-    data_path = arguments[2]
     field = arguments[1]
+    data_path = arguments[2]
 
     FindMatches.new.call(query: query, field: field, data_path: data_path)
   end
 
+  desc "Find clients with duplicate values for a given field. Optionally specify the field and path to the source JSON data."
   task :find_duplicates do
     field = arguments[0]
     data_path = arguments[1]
