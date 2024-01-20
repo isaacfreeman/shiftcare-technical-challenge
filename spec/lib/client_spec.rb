@@ -1,26 +1,28 @@
+# frozen_string_literal: true
+
 require_relative '../../lib/client'
 
 describe Client do
-  let(:client) { described_class.new(id: 1, full_name: "John Doe", email: "john.doe@example.com") }
+  let(:client) { described_class.new(id: 1, full_name: 'John Doe', email: 'john.doe@example.com') }
 
-  describe ".from_hash" do
+  describe '.from_hash' do
     subject { Client.from_hash(client_data) }
     let(:client_data) do
       {
-        "id" => 1,
-        "full_name" => "John Doe",
-        "email" => "john.doe@example.com"
+        'id' => 1,
+        'full_name' => 'John Doe',
+        'email' => 'john.doe@example.com'
       }
     end
 
-    it "builds a Client without error" do
+    it 'builds a Client without error' do
       expect { subject }.not_to raise_error
     end
 
-    context "when the hash is empty" do
+    context 'when the hash is empty' do
       let(:client_data) { {} }
 
-      it "raises an error" do
+      it 'raises an error' do
         expect { subject }.to raise_error(Client::MissingDataError)
       end
     end
@@ -29,7 +31,7 @@ describe Client do
   describe '#to_s' do
     subject { client.to_s }
 
-    it "uses the output from `inspect`" do
+    it 'uses the output from `inspect`' do
       expect(subject).to eq(client.inspect)
     end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'json'
 
 require_relative './client'
@@ -30,7 +32,7 @@ class ClientList
     raise UnknownFieldError unless Client::ALLOWED_QUERY_FIELDS.include?(field)
 
     @clients.group_by { |client| client.public_send(field) }
-            .select { |email,clients| clients.count > 1}
+            .select { |_email, clients| clients.count > 1 }
   end
 
   def find_matches(regex_query:, field: :full_name)

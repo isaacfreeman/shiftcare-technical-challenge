@@ -1,11 +1,12 @@
+# frozen_string_literal: true
+
 require 'irb'
 
-require_relative '../client.rb'
-require_relative '../client_list.rb'
+require_relative '../client'
+require_relative '../client_list'
 
 class FindMatches
-  def initialize
-  end
+  def initialize; end
 
   def call(query:, field: nil, data_path: nil)
     data_path ||= 'clients.json'
