@@ -1,5 +1,5 @@
-require './lib/services/find_matches.rb'
-require './lib/services/find_duplicates.rb'
+require_relative '../services/find_duplicates'
+require_relative '../services/find_matches'
 
 namespace :clients do
   desc "Find clients that match a given query. Optionally specify the field to match and path to the source JSON data."
