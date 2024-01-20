@@ -5,6 +5,8 @@ require 'irb'
 require_relative '../client'
 require_relative '../client_list'
 
+# Wraps the ClientList#find_duplicates method, providing output for a command
+# line UI.
 class FindDuplicates
   def initialize; end
 

@@ -4,6 +4,9 @@ require 'json'
 
 require_relative './client'
 
+# Represents a set of clients, which can be initialized from JSON data or from
+# a JSON file.
+# Provides methods for querying the list and detecting duplicates.
 class ClientList
   attr_reader :clients
 

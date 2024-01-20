@@ -5,6 +5,8 @@ require 'irb'
 require_relative '../client'
 require_relative '../client_list'
 
+# Wraps the ClientList#find_matches method, providing output for a command
+# line UI.
 class FindMatches
   def initialize; end
 

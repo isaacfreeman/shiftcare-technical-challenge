@@ -2,6 +2,7 @@
 
 require 'json'
 
+# Represents a single client, with a method to initialize from a hash.
 class Client
   ALLOWED_QUERY_FIELDS = %i[full_name email].freeze
 
