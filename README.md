@@ -64,3 +64,10 @@ rake clients:find_duplicates email clients.json
 - I've also supported a `field` param.
 - I've not implemented an API endpoint for the `find_duplicates`, as it wasn't specified. However, it would follow a similar pattern, as another action on `ClientsController`.
 - At this stage I've left the data source unchanged, so that the app is retireving its clients from the `clients.json` file on every request. In a real web project I'd typically move this data to a database. Under that scenario I'd make `client.rb` a Rails model.
+
+### Scaling
+- The right approach to scaling this code would depend on where and how it's going to be used. If it's intended to be primarily a single-user command line tool, that will have different scaling requirements from a web app. The first step should be to understand what bottlenecks we're experiencing in practice. They may be in performance, CPU load, memory footprint, or storage capacity. In a web environment, a solid monitoring system is key to understanding where the bottlenecks are.
+- That said, a key constraint in most scenarios is that we're retrieving the entire client list from a JSON file into memory each time a command is called. If the list of clients grows too large, the data will eventually take too long to load (especially if we need to deliver a response before an HTTP request times out) or use up all available memory.
+- In practice, the best approach will usually be to move the data from a JSON file to a database. Database systems are designed to manage these scaling problems! Assuming a web environment, I'd typically use `PostgreSQL` as the industry standard all-round tool.
+- Code in `ClientList#find_matches` and `ClientList#find_duplicates` would be rewritten as database queries.
+- It'd be important to specify that we need indexes on the fields to be searched: clients' `full_name` and `email` as well as `id`.
