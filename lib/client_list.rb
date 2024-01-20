@@ -1,7 +1,12 @@
+# frozen_string_literal: true
+
 require 'json'
 
 require_relative './client'
 
+# Represents a set of clients, which can be initialized from JSON data or from
+# a JSON file.
+# Provides methods for querying the list and detecting duplicates.
 class ClientList
   attr_reader :clients
 
@@ -30,7 +35,7 @@ class ClientList
     raise UnknownFieldError unless Client::ALLOWED_QUERY_FIELDS.include?(field)
 
     @clients.group_by { |client| client.public_send(field) }
-            .select { |email,clients| clients.count > 1}
+            .select { |_email, clients| clients.count > 1 }
   end
 
   def find_matches(regex_query:, field: :full_name)

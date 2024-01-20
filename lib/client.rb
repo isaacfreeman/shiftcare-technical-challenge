@@ -1,7 +1,10 @@
+# frozen_string_literal: true
+
 require 'json'
 
+# Represents a single client, with a method to initialize from a hash.
 class Client
-  ALLOWED_QUERY_FIELDS = [:full_name, :email]
+  ALLOWED_QUERY_FIELDS = %i[full_name email].freeze
 
   attr_reader :id, :full_name, :email
 
@@ -15,16 +18,16 @@ class Client
 
   # Initialize from a hash of arguments
   def self.from_hash(client_data)
-    raise MissingDataError if [client_data["id"], client_data["full_name"], client_data["email"]].any?(&:nil?)
+    raise MissingDataError if [client_data['id'], client_data['full_name'], client_data['email']].any?(&:nil?)
 
     new(
-      id: client_data["id"],
-      full_name: client_data["full_name"],
-      email: client_data["email"]
+      id: client_data['id'],
+      full_name: client_data['full_name'],
+      email: client_data['email']
     )
   end
 
   def to_s
-    self.inspect
+    inspect
   end
 end

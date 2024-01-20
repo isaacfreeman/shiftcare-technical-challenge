@@ -49,9 +49,18 @@ rake clients:find_duplicates email clients.json
 - I've allowed `ClientList` to raise some errors directly from lower-level libraries where I felt the error messages were clear enough without modification. In a real project I'd consider wrapping these in custom errors (as I've used in `Client`) to provide more context.
 - There are two service classes `FindDuplicates` and `FindMatches` which act something like controller actions for each command: they're responsible for building a `ClientList`, calling the appropriate method on it, and reporting the results.
 - I've chosen `RSpec` for testing. `MiniTest` would also have been a good option (and in fact it's now slightly more widely used than RSpec: https://www.ruby-toolbox.com/categories/testing_frameworks). For projects with entirely new code I don't think there's any particular reason to prefer RSpec. However, I find it really shines in real-world projects where there's legacy code that wasn't written with automated testing in mind. I've used it here to illustrate my usual style for unit testing, using a `describe` block for each public method.
+- I've used `Rubocop` to apply code style standards. In a few places I've left some decisions unresolved, and Rubocop has a nice feature to auto-generate a `.rubocop_todo.yml` file which records unresolved breaches I'm not going to fix now as I think they're pretty minor. I really like to use this system in real projects, as it allows the team to maintain a backlog of information on code that could be improved, without getting in the way of new work.
 
 ## Next Steps
 
 ### Specifying JSON file and search field
 - I've gone ahead and implemented the first bullet point from Next Steps in the main branch, as it seemed a natural extension of the base functionality. Both commands accept optional arguments for a search field and source file. For real work I'd discuss this with a Product Owner or similar stakeholder before proceeding.
 - A limitation of the approach I've taken with Rake is that arguments are positional: if you want to provide a third argument you can't skip the second. I've assumed that this would be an acceptable limitation, but if necessary it could be corrected by changing to another way of receiving command line arguments, without changing any of the other code.
+
+### Providing a REST API
+- I've implemented this in a separate `rails` branch, with a Github pull request ready to merge at https://github.com/isaacfreeman/shiftcare-technical-challenge/pull/1
+- I've chosen to use `Rails` as the web framework. Arguably for a simple job like this it might have been appropriate to use a lighter-weight framework such as `Sinatra`. However, I felt Rails would probably be more familair to Shiftcare (as it is to me), and using it might facilitate some further conversations.
+- I've implemented the endpoint as specified: `http://localhost:3000/query?q=foo`. In a real project, I'd want to discuss whether this is the best format for an API, and would probably recommend something like `/clients?q=foo` to be clear about what's being queried. If we built further on this we might wish to query other objects.
+- I've also supported a `field` param.
+- I've not implemented an API endpoint for the `find_duplicates`, as it wasn't specified. However, it would follow a similar pattern, as another action on `ClientsController`.
+- At this stage I've left the data source unchanged, so that the app is retireving its clients from the `clients.json` file on every request. In a real web project I'd typically move this data to a database. Under that scenario I'd make `client.rb` a Rails model.
