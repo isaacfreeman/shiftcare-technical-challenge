@@ -1,4 +1,5 @@
 require 'json'
+
 require_relative './client'
 
 class ClientList
@@ -14,6 +15,11 @@ class ClientList
     clients = JSON.parse(json_data)
                   .map { |client_json| Client.from_hash(client_json) }
     ClientList.new(clients: clients)
+  end
+
+  def self.from_json_file(data_path)
+    json_data = File.read(data_path)
+    from_json(json_data)
   end
 
   def count

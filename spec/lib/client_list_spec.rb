@@ -54,6 +54,19 @@ describe ClientList do
     end
   end
 
+  describe ".from_json_file" do
+    subject { ClientList.from_json_file(data_path) }
+    let(:data_path) { "#{RSPEC_ROOT}/fixtures/clients.json"}
+
+    it "builds a ClientList without error" do
+      expect { subject }.not_to raise_error
+    end
+
+    context "when the file can't be found" do
+      it "does soemthing sensible"
+    end
+  end
+
   describe '#count' do
     subject { client_list.count }
 
