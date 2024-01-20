@@ -10,8 +10,9 @@ class FindDuplicates
   def initialize
   end
 
-  def call
-    json_data = File.read('clients.json')
+  def call(data_path: nil)
+    data_path ||= 'clients.json'
+    json_data = File.read(data_path)
     client_list = ClientList.from_json(json_data)
 
     puts "Clients with duplicate emails"

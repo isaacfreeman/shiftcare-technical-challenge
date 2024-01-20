@@ -10,8 +10,9 @@ class FindMatches
   def initialize
   end
 
-  def call(query)
-    json_data = File.read('clients.json')
+  def call(query:, data_path: nil)
+    data_path ||= 'clients.json'
+    json_data = File.read(data_path)
     client_list = ClientList.from_json(json_data)
 
     matching_clients = client_list.find_matches(regex_query: query, field: :full_name)
