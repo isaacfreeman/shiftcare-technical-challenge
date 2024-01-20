@@ -63,7 +63,11 @@ describe ClientList do
     end
 
     context "when the file can't be found" do
-      it "does soemthing sensible"
+      let(:data_path) { "#{RSPEC_ROOT}/fixtures/flarn.json"}
+
+      it "does soemthing sensible" do
+        expect { subject }.to raise_error(Errno::ENOENT)
+      end
     end
   end
 
